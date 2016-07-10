@@ -53,7 +53,7 @@ Creating the settings for the post type is no more difficult. Simply create an a
     $settings = array(
         'menu_position' => 40,
         'menu_icon' => 'dashicons-book-alt',
-        'supports' => 'title', 'editor', 'revisions', 'thumbnail'
+        'supports' => array( 'title', 'editor', 'revisions', 'thumbnail' )
     );
     
     $cpt->add( 'books', $settings );
