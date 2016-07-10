@@ -9,28 +9,28 @@
 abstract class Arconix_CPT_Admin {
 	
 	/**
-	 * Post Type Name
-	 *
+     * Post Type Name
+     *
      * @since   1.0.0
-	 * @var		string			$post_type_name		Name of the Custom Post Type.
-	 */
+     * @var		string			$post_type_name		Name of the Custom Post Type.
+     */
 	protected $post_type_name;
     
 	/**
-	 * Textdomain used for translation.
-	 *
+     * Textdomain used for translation.
+     *
      * @since   1.0.0
-	 * @var		string			$textdomain			Used for i18n.
-	 */
+     * @var		string			$textdomain			Used for i18n.
+     */
 	protected $textdomain;
 	
 	/**
-	 * Constructor
-	 * 
+     * Constructor
+     * 
      * @since   1.0.0
-	 * @param	string			$post_type_name		Name of the Custom Post Type
-	 * @param	string          $textdomain         For i18n
-	 */
+     * @param	string			$post_type_name		Name of the Custom Post Type
+     * @param	string          $textdomain         For i18n
+     */
 	public function __construct( $post_type_name, $textdomain = 'default' ) {
         if ( ! isset( $post_type_name  ) )
             return;
@@ -42,10 +42,10 @@ abstract class Arconix_CPT_Admin {
 	}
 	
 	/**
-	 * Defines which columns will be displayed on the Post Type Edit screen
+     * Defines which columns will be displayed on the Post Type Edit screen
      * 
      * @since   1.0.0
-	 */
+     */
 	abstract public function columns_define( $columns );
 	
 	/**
@@ -73,13 +73,13 @@ abstract class Arconix_CPT_Admin {
     }
 
 	/**
-	 * Change Post Updated messages.
-	 *
-	 * Internal function that modifies the custom post type names in updated messages.
-	 *
+     * Change Post Updated messages.
+     *
+     * Internal function that modifies the custom post type names in updated messages.
+     *
      * @since   1.0.0
-	 * @param	array			$messages			An array of post updated messages
-	 */
+     * @param	array			$messages			An array of post updated messages
+     */
 	public function updated_messages( $messages ) {
         // Get properties of the post type being configured
         $obj = get_post_type_object( $this->post_type_name );
@@ -105,13 +105,13 @@ abstract class Arconix_CPT_Admin {
 	}
 
 	/**
-	 * Change Bulk updated messages
-	 *
-	 * Internal function that modifies the custom post type names in bulk updated messages
-	 *
+     * Change Bulk updated messages
+     *
+     * Internal function that modifies the custom post type names in bulk updated messages
+     *
      * @since   1.0.0
-	 * @param	array			$messages			An array of bulk updated messages
-	 */
+     * @param	array			$messages			An array of bulk updated messages
+     */
 	public function bulk_updated_messages( $bulk_messages, $bulk_counts ) {
         // Get properties of the post type being configured
         $obj = get_post_type_object( $this->post_type_name );
