@@ -11,53 +11,53 @@
 class Arconix_CPT_Register {
 	
 	/**
-	 * Post Type Name
-	 *
+     * Post Type Name
+     *
      * @since   1.0.0
-	 * @var		string			$post_type_name     Name of the Custom Post Type.
-	 */
+     * @var		string			$post_type_name     Name of the Custom Post Type.
+     */
 	protected $post_type_name;
 	
 	/**
-	 * Holds the singular name of the post type. This is a human
-	 * friendly name, capitalized with spaces.
-	 *
+     * Holds the singular name of the post type. This is a human
+     * friendly name, capitalized with spaces.
+     *
      * @since   1.0.0
-	 * @var		string			$singular			Post type singular name. 
-	 */
+     * @var		string			$singular			Post type singular name. 
+     */
 	protected $singular;
 	
 	/**
-	 * Holds the plural name of the post type. This is a human
-	 * friendly name, capitalized with spaces.
-	 *
+     * Holds the plural name of the post type. This is a human
+     * friendly name, capitalized with spaces.
+     *
      * @since   1.0.0
-	 * @var		string			$plural				Post type plural name.
-	 */
+     * @var		string			$plural				Post type plural name.
+     */
 	protected $plural;
 	
 	/**
-	 * Textdomain used for translation.
-	 *
+     * Textdomain used for translation.
+     *
      * @since   1.0.0
-	 * @var		string			$textdomain			Used for i18n.
-	 */
+     * @var		string			$textdomain			Used for i18n.
+     */
 	protected $textdomain;
 	
 	/**
-	 * Custom Post Type registration labels.
-	 *
+     * Custom Post Type registration labels.
+     *
      * @since   1.0.0
-	 * @var		array			$labels				Post Type registration labels.
-	 */
+     * @var		array			$labels				Post Type registration labels.
+     */
 	protected $labels;
 	
 	/**
-	 * Additional settings for post type registration.
-	 *
+     * Additional settings for post type registration.
+     *
      * @since   1.0.0
-	 * @var		array			$settings			Post Type registration settings.
-	 */
+     * @var		array			$settings			Post Type registration settings.
+     */
 	protected $settings;
 
 	/**
@@ -94,12 +94,12 @@ class Arconix_CPT_Register {
 	}
 	
 	/**
-	 * Register the Custom Post Type
-	 * 
-	 * Creates an array of the labels and settings class vars and then registers the custom post type.
+     * Register the Custom Post Type
+     * 
+     * Creates an array of the labels and settings class vars and then registers the custom post type.
      * 
      * @since   1.0.0
-	 */
+     */
 	public function register() {
 		// Array of the labels and settings for the CPT
         $args = array_merge( $this->settings, $this->labels );
@@ -111,12 +111,12 @@ class Arconix_CPT_Register {
 	}
 	
 	/**
-	 * Assign the Custom Post Type registration settings
-	 * 
+     * Assign the Custom Post Type registration settings
+     * 
      * @since   1.0.0
-	 * @param	array           $settings               Post Type settings. Default is a public post type
-	 * @return	array                                   Array of Post Type settings merged with defaults
-	 */
+     * @param	array           $settings               Post Type settings. Default is a public post type
+     * @return	array                                   Array of Post Type settings merged with defaults
+     */
 	protected function set_settings( $settings = array() ) {
 		// Set the post type to public by default
 		$defaults = array(
@@ -128,11 +128,11 @@ class Arconix_CPT_Register {
 	}
 	
 	/**
-	 * Set the Custom Post Type labels.
-	 * 
+     * Set the Custom Post Type labels.
+     * 
      * @since   1.0.0
-	 * @return	array           $labels                 Post Type labels
-	 */
+     * @return	array           $labels                 Post Type labels
+     */
 	protected function set_labels() {
 		
 		$singular = $this->singular;
@@ -158,14 +158,14 @@ class Arconix_CPT_Register {
 	}
 	
 	/**
-	 * Set the Custom Post Type names
+     * Set the Custom Post Type names
      * 
      * Uses the user-defined name, if available, and falls back to generating the name
      * programatically if not.
-	 * 
+     * 
      * @since   1.0.0
-	 * @param	string|array	$post_type_names        Name of the post type or array of post type conditional names.
-	 */
+     * @param	string|array	$post_type_names        Name of the post type or array of post type conditional names.
+     */
 	protected function set_post_type_names( $post_type_names ) {
 		// Check if all the post_type_names have been supplied
 		if ( is_array( $post_type_names ) ) {
@@ -211,14 +211,14 @@ class Arconix_CPT_Register {
 	
 
 	/**
-	 * Get singular
-	 *
-	 * Returns the human friendly singular name.
-	 *
+     * Get singular
+     *
+     * Returns the human friendly singular name.
+     *
      * @since   1.0.0
-	 * @param	string			$name				The name you want to unpluralize.
-	 * @return	string								The friendly singular name.
-	 */
+     * @param	string			$name				The name you want to unpluralize.
+     * @return	string								The friendly singular name.
+     */
 	protected function get_singular( $name = null ) {
 		// If no name is passed the post_type_name is used.
 		if ( !isset( $name ) ) {
@@ -236,14 +236,14 @@ class Arconix_CPT_Register {
 	}
 
 	/**
-	 * Get plural
-	 *
-	 * Returns the human friendly plural name.
-	 *
+     * Get plural
+     *
+     * Returns the human friendly plural name.
+     *
      * @since   1.0.0
-	 * @param	string			$name				The name you want to pluralize.
-	 * @return	string								The friendly pluralized name.
-	 */
+     * @param	string			$name				The name you want to pluralize.
+     * @return	string								The friendly pluralized name.
+     */
 	protected function get_plural( $name = null ) {
 		// If no name is passed the post_type_name is used.
 		if ( !isset( $name ) )
@@ -254,18 +254,18 @@ class Arconix_CPT_Register {
 	}
 
 	/**
-	 * Get human friendly
-	 *
-	 * Returns the human friendly name.
-	 *
-	 *    ucwords      Capitalize words
-	 *    strtolower   Makes string lowercase before capitalizing
-	 *    str_replace  Replace all instances of hyphens and underscores to spaces
-	 *
+     * Get human friendly
+     *
+     * Returns the human friendly name.
+     *
+     *    ucwords      Capitalize words
+     *    strtolower   Makes string lowercase before capitalizing
+     *    str_replace  Replace all instances of hyphens and underscores to spaces
+     *
      * @since   1.0.0
-	 * @param	string			$name				The name you want to make friendly.
-	 * @return	string								The human friendly name.
-	 */
+     * @param	string			$name				The name you want to make friendly.
+     * @return	string								The human friendly name.
+     */
 	protected function get_human_friendly( $name = null ) {
 		// If no name is passed the post_type_name is used.
 		if ( !isset( $name ) )
