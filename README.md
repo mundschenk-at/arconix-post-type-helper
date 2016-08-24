@@ -20,6 +20,7 @@ Adding Custom Post Types, especially multiple types in the same project, involve
 
 1. Copy the `arconix` files into your plugin folder, ideally into a subdirectory with like files (such as `includes`).
 2. Make the classes available. You can `require_once` each file, if the structural element doesn't exist, or just use an autoloader (renaming anything as needed if following PSR-0/4).
+3. If you will be translating your plugin or making it available on wordpress.org, you should search/replace all instances of 'textdomain' in the class files with one that is plugin-specific.
 
 ## Usage
 
@@ -30,9 +31,9 @@ The most basic implementation possible
     
     $cpt->add( 'books' );
 
-That's it. We've registered a new `Books` post type using the default settings (setting the post type to public) and the textdomain (for translations) is set to `default`. If you won't be translating your plugin or making it available on wordpress.org, you can ignore that argument.
+That's it. We've registered a new `Books` post type using the default settings (setting the post type to public).
 
-If we want to get a bit more advanced, we can define the singular and plural versions of the Post Type name, which is espcially helpful if the pluralized version of the post type name does not end in 's' or we want to provide a namespaced post type name.
+If we want to get a bit more advanced, we can define the singular and plural versions of the Post Type name, which is especially helpful if the pluralized version of the post type name does not end in 's' or we want to provide a namespaced post type name.
 
     $cpt = new Arconix_CPT_Register();
     
@@ -62,7 +63,7 @@ Creating the settings for the post type is no more difficult. Simply create an a
 
 Using this class follows the same format as adding a custom post type. The only difference is the additional argument to the `add()` function.
 
-    public function add( $taxonomy_names, $post_type_name = null, $settings = array(), $textdomain = 'default' );
+    public function add( $taxonomy_names, $post_type_name = null, $settings = array() );
 
 To attach the taxonomy to an registered post type (existing or one you've created), the post type name must be passed as the second argument to the function otherwise the taxonomy will be registered but not linked.
 
@@ -74,9 +75,10 @@ To attach the taxonomy to an registered post type (existing or one you've create
 This abstract class must be extended (in the same way `WP_Widget` is extended when creating a new widget). When extending this class there are three functions that must be defined: `__construct()`, `columns_define()` and `column_value()`. These functions, respectively, initialize the class, control what columns show up on the admin screen and what content will be displayed in each column. The remaining functions in the abstract class will run as is unless there is need to customize their behavior. A basic implementation would look like the following:
 
     class Arconix_Books_Admin extends Arconix_CPT_Admin {
-        // The only thing this function does in this example is pass the arguments to the abstract parent class for execution
-        public function __construct( $post_type_name, $textdomain = 'default' ) {
-            parent::__construct( $post_type_name, $textdomain );
+        // The only thing this function does in this example is pass the arguments 
+        // to the abstract parent class for execution
+        public function __construct( $post_type_name ) {
+            parent::__construct( $post_type_name );
         }
         
         // This function would define which columns are available on the Admin screen
@@ -100,7 +102,7 @@ The extended class can add new functionality that isn't present in the abstract 
             $screen = get_current_screen();
 
 	 	    if ( $this->post_type_name == $screen->post_type )
-			    return __( 'Enter my Book Title here...', $this->textdomain );
+			    return __( 'Enter my Book Title here...', 'textdomain' );
         }
     }
 
@@ -122,7 +124,7 @@ Once all the customization work is done, the class needs to be instantiated. Thi
     
     $acb = new Arconix_Books_Admin( 'books' );
 
-As we saw earlier, the class accepts two arguments, the post type we're customizing and the texdomain (optional) for translations.
+As we saw earlier, the class needs only one argument passed to it -- the post type name this admin customization will apply to.
 
 ## Contribute
 
