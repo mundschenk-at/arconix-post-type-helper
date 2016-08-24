@@ -8,42 +8,42 @@
  * @version 1.0.0
  */
 abstract class Arconix_CPT_Admin {
-	
-	/**
+
+    /**
      * Post Type Name
      *
-     * @since   1.0.0
-     * @var     string      $post_type_name		Name of the Custom Post Type.
+     * @var     string      $post_type_name     Name of the Custom Post Type 
      */
 	protected $post_type_name;
-	
-	/**
+
+    /**
      * Constructor
      * 
      * @since   1.0.0
-     * @param   string      $post_type_name		Name of the Custom Post Type
+     * @param   string      $post_type_name     Name of the Custom Post Type
+     * @return  void                            Return if no post type name is passed
      */
 	public function __construct( $post_type_name ) {
-        if ( ! isset( $post_type_name  ) )
+        if ( ! isset( $post_type_name ) )
             return;
-        
-		$this->post_type_name = $post_type_name;
-        
+
+        $this->post_type_name = $post_type_name;
+
         $this->init();
-	}
-	
-	/**
+    }
+
+    /**
      * Defines which columns will be displayed on the Post Type Edit screen
      * 
      * @since   1.0.0
      */
 	abstract public function columns_define( $columns );
-	
-	/**
-	 * Sets the value of each column to be displayed on the Post Type Edit screen
+
+    /**
+     * Sets the value of each column to be displayed on the Post Type Edit screen
      * 
      * @since   1.0.0
-	 */
+     */
 	abstract public function column_value( $column );
 
     /**
@@ -63,7 +63,7 @@ abstract class Arconix_CPT_Admin {
 		add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_updated_messages' ), 10, 2 );
     }
 
-	/**
+    /**
      * Change Post Updated messages.
      *
      * Internal function that modifies the custom post type names in updated messages.
@@ -77,25 +77,24 @@ abstract class Arconix_CPT_Admin {
         
         $singular = $obj->labels->singular_name;
         $post = get_post();
-        
 		
-		$messages[$this->post_type_name] = array(
-			0	=> '',
-			1	=> sprintf( __( '%s updated.', 'textdomain' ), $singular ),
-			2	=> __( 'Custom field updated.', 'textdomain' ),
-			3	=> __( 'Custom field deleted.', 'textdomain' ),
-			4	=> sprintf( __( '%s updated.', 'textdomain' ), $singular ),
-			5	=> isset( $_GET[ 'revision' ] ) ? sprintf( __( '%2$s restored to revision from %1$s', 'textdomain' ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ), $singular ) : false,
-			6	=> sprintf( __( '%s updated.', 'textdomain' ), $singular ),
-			7	=> sprintf( __( '%s saved.', 'textdomain' ), $singular ),
-			8	=> sprintf( __( '%s submitted.', 'textdomain' ), $singular ),
-			9	=> sprintf( __( '%2$s scheduled for: <strong>%1$s</strong>.', 'textdomain' ), date_i18n( __( 'M j, Y @ G:i', 'textdomain' ), strtotime( $post->post_date ) ), $singular ),
-			10  => sprintf( __( '%s draft updated.', 'textdomain' ), $singular ),
-		);
-		return $messages;
+        $messages[ $this->post_type_name ] = array(
+            0  => '',
+            1  => sprintf( __( '%s updated.', 'textdomain' ), $singular ),
+            2  => __( 'Custom field updated.', 'textdomain' ),
+            3  => __( 'Custom field deleted.', 'textdomain' ),
+            4  => sprintf( __( '%s updated.', 'textdomain' ), $singular ),
+            5  => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%2$s restored to revision from %1$s', 'textdomain' ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ), $singular ) : false,
+            6  => sprintf( __( '%s updated.', 'textdomain' ), $singular ),
+            7  => sprintf( __( '%s saved.', 'textdomain' ), $singular ),
+            8  => sprintf( __( '%s submitted.', 'textdomain' ), $singular ),
+            9  => sprintf( __( '%2$s scheduled for: <strong>%1$s</strong>.', 'textdomain' ), date_i18n( __( 'M j, Y @ G:i', 'textdomain' ), strtotime( $post->post_date ) ), $singular ),
+            10 => sprintf( __( '%s draft updated.', 'textdomain' ), $singular ),
+        );
+        return $messages;
 	}
 
-	/**
+    /**
      * Change Bulk updated messages
      *
      * Internal function that modifies the custom post type names in bulk updated messages
@@ -110,18 +109,18 @@ abstract class Arconix_CPT_Admin {
         $singular = $obj->labels->singular_name;
         $plural = $obj->labels->name;
 		
-		$bulk_messages[$this->post_type_name] = array(
-			'updated'	=> _n( '%s ' . $singular . ' updated.', '%s ' . $plural . ' updated.', $bulk_counts[ 'updated' ] ),
-			'locked'	=> _n( '%s ' . $singular . ' not updated, somebody is editing it.', '%s ' . $plural . ' not updated, somebody is editing them.', $bulk_counts[ 'locked' ] ),
-			'deleted'	=> _n( '%s ' . $singular . ' permanently deleted.', '%s ' . $plural . ' permanently deleted.', $bulk_counts[ 'deleted' ] ),
-			'trashed'	=> _n( '%s ' . $singular . ' moved to the Trash.', '%s ' . $plural . ' moved to the Trash.', $bulk_counts[ 'trashed' ] ),
-			'untrashed'	=> _n( '%s ' . $singular . ' restored from the Trash.', '%s ' . $plural . ' restored from the Trash.', $bulk_counts[ 'untrashed' ] ),
-		);
-		
-		return $bulk_messages;
+        $bulk_messages[ $this->post_type_name ] = array(
+            'updated'   => _n( '%s ' . $singular . ' updated.', '%s ' . $plural . ' updated.', $bulk_counts[ 'updated' ] ),
+            'locked'    => _n( '%s ' . $singular . ' not updated, somebody is editing it.', '%s ' . $plural . ' not updated, somebody is editing them.', $bulk_counts[ 'locked' ] ),
+            'deleted'   => _n( '%s ' . $singular . ' permanently deleted.', '%s ' . $plural . ' permanently deleted.', $bulk_counts[ 'deleted' ] ),
+            'trashed'   => _n( '%s ' . $singular . ' moved to the Trash.', '%s ' . $plural . ' moved to the Trash.', $bulk_counts[ 'trashed' ] ),
+            'untrashed' => _n( '%s ' . $singular . ' restored from the Trash.', '%s ' . $plural . ' restored from the Trash.', $bulk_counts[ 'untrashed' ] ),
+        );
+
+        return $bulk_messages;
 	}
 	
-	/**
+    /**
      * Add the Post type to the "At a Glance" Dashboard Widget
      * 
      * Requires the Gamajo Dashboard Glancer class.
