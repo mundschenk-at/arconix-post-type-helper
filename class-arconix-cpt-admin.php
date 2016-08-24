@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abstract Class helps build out the Admin interface for the Custom Post Type
  * 
@@ -14,7 +15,7 @@ abstract class Arconix_CPT_Admin {
      *
      * @var     string      $post_type_name     Name of the Custom Post Type 
      */
-	protected $post_type_name;
+    protected $post_type_name;
 
     /**
      * Constructor
@@ -23,8 +24,8 @@ abstract class Arconix_CPT_Admin {
      * @param   string      $post_type_name     Name of the Custom Post Type
      * @return  void                            Return if no post type name is passed
      */
-	public function __construct( $post_type_name ) {
-        if ( ! isset( $post_type_name ) )
+    public function __construct( $post_type_name ) {
+        if ( !isset( $post_type_name ) )
             return;
 
         $this->post_type_name = $post_type_name;
@@ -37,14 +38,14 @@ abstract class Arconix_CPT_Admin {
      * 
      * @since   1.0.0
      */
-	abstract public function columns_define( $columns );
+    abstract public function columns_define( $columns );
 
     /**
      * Sets the value of each column to be displayed on the Post Type Edit screen
      * 
      * @since   1.0.0
      */
-	abstract public function column_value( $column );
+    abstract public function column_value( $column );
 
     /**
      * Get our hooks into WordPress
@@ -56,11 +57,11 @@ abstract class Arconix_CPT_Admin {
      */
     public function init() {
         add_action( 'manage_posts_custom_column', array( $this, 'column_value' ) );
-		add_action( 'dashboard_glance_items', array( $this, 'at_a_glance' ) );
-		
-		add_filter( 'manage_edit-' . $this->post_type_name . '_columns', array( $this, 'columns_define' ) );
-		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
-		add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_updated_messages' ), 10, 2 );
+        add_action( 'dashboard_glance_items', array( $this, 'at_a_glance' ) );
+
+        add_filter( 'manage_edit-' . $this->post_type_name . '_columns', array( $this, 'columns_define' ) );
+        add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
+        add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_updated_messages' ), 10, 2 );
     }
 
     /**
@@ -71,13 +72,13 @@ abstract class Arconix_CPT_Admin {
      * @since   1.0.0
      * @param   array       $messages       An array of post updated messages
      */
-	public function updated_messages( $messages ) {
+    public function updated_messages( $messages ) {
         // Get properties of the post type being configured
         $obj = get_post_type_object( $this->post_type_name );
-        
+
         $singular = $obj->labels->singular_name;
-        $post = get_post();
-		
+        $post     = get_post();
+
         $messages[ $this->post_type_name ] = array(
             0  => '',
             1  => sprintf( __( '%s updated.', 'textdomain' ), $singular ),
@@ -92,7 +93,7 @@ abstract class Arconix_CPT_Admin {
             10 => sprintf( __( '%s draft updated.', 'textdomain' ), $singular ),
         );
         return $messages;
-	}
+    }
 
     /**
      * Change Bulk updated messages
@@ -102,13 +103,13 @@ abstract class Arconix_CPT_Admin {
      * @since   1.0.0
      * @param   array       $messages       An array of bulk updated messages
      */
-	public function bulk_updated_messages( $bulk_messages, $bulk_counts ) {
+    public function bulk_updated_messages( $bulk_messages, $bulk_counts ) {
         // Get properties of the post type being configured
         $obj = get_post_type_object( $this->post_type_name );
-        
+
         $singular = $obj->labels->singular_name;
-        $plural = $obj->labels->name;
-		
+        $plural   = $obj->labels->name;
+
         $bulk_messages[ $this->post_type_name ] = array(
             'updated'   => _n( '%s ' . $singular . ' updated.', '%s ' . $plural . ' updated.', $bulk_counts[ 'updated' ] ),
             'locked'    => _n( '%s ' . $singular . ' not updated, somebody is editing it.', '%s ' . $plural . ' not updated, somebody is editing them.', $bulk_counts[ 'locked' ] ),
@@ -118,8 +119,8 @@ abstract class Arconix_CPT_Admin {
         );
 
         return $bulk_messages;
-	}
-	
+    }
+
     /**
      * Add the Post type to the "At a Glance" Dashboard Widget
      * 
@@ -131,13 +132,12 @@ abstract class Arconix_CPT_Admin {
     public function at_a_glance() {
         // Get properties of the post type being configured
         $obj = get_post_type_object( $this->post_type_name );
-        
+
         // Gamajo class must exist and post type must be public
         if ( class_exists( 'Gamajo_Dashboard_Glancer' ) && $obj->public == 1 ) {
             $glancer = new Gamajo_Dashboard_Glancer;
             $glancer->add( $this->post_type_name );
         }
-        
     }
 
 }

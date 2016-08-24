@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class for Registering Custom Post Types
  * 
@@ -17,7 +18,7 @@ class Arconix_CPT_Register {
      * @var     string      $post_type_name     Name of the Custom Post Type.
      */
     protected $post_type_name;
-	
+
     /**
      * Holds the singular name of the post type. This is a human
      * friendly name, capitalized with spaces.
@@ -26,7 +27,7 @@ class Arconix_CPT_Register {
      * @var     string      $singular       Post type singular name. 
      */
     protected $singular;
-	
+
     /**
      * Holds the plural name of the post type. This is a human
      * friendly name, capitalized with spaces.
@@ -35,7 +36,7 @@ class Arconix_CPT_Register {
      * @var     string      $plural     Post type plural name.
      */
     protected $plural;
-	
+
     /**
      * Custom Post Type registration labels.
      *
@@ -43,7 +44,7 @@ class Arconix_CPT_Register {
      * @var     array       $labels     Post Type registration labels.
      */
     protected $labels;
-	
+
     /**
      * Additional settings for post type registration.
      *
@@ -91,7 +92,7 @@ class Arconix_CPT_Register {
      * @since   1.0.0
      */
     public function register() {
-		// Array of the labels and settings for the CPT
+        // Array of the labels and settings for the CPT
         $args = array_merge( $this->settings, $this->labels );
 
         // Register our new custom post type

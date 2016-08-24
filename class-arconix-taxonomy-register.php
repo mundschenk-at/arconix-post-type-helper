@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class for Registering Custom Taxonomies
  * 
@@ -9,7 +10,7 @@
  * @version 1.0.0
  */
 class Arconix_Taxonomy_Register {
-    
+
     /**
      * Taxonomy Name
      * 
