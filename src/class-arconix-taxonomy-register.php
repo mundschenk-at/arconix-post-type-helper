@@ -76,18 +76,19 @@ class Arconix_Taxonomy_Register {
 	 * Add a Taxonomy to register
 	 *
 	 * @since   1.0.0
-	 * @param   string|array    $taxonomy_names         Name of the taxonomy to register as a string or an array of names
-	 *                                                  containing the taxonomy name along with singular and plural forms
-	 * @param   string          $post_type_name         Name of the post type to link to the taxonomy or if left null the
-	 *                                                  taxonomy will be registered only
-	 * @param   array           $settings               Additional taxonomy registration settings
-	 *                                                  (see https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments )
-	 * @return  void                                    Return early if no taxonomy name was provided
+	 * @param   string|array $taxonomy_names         Name of the taxonomy to register as a string or an array of names
+	 *                                               containing the taxonomy name along with singular and plural forms.
+	 * @param   string       $post_type_name         Name of the post type to link to the taxonomy or if left null the
+	 *                                               taxonomy will be registered only.
+	 * @param   array        $settings               Additional taxonomy registration settings
+	 *                                               (see https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments ).
+	 * @return  void                                 Return early if no taxonomy name was provided.
 	 */
 	public function add( $taxonomy_names, $post_type_name = null, $settings = array() ) {
-		// Bail if the taxonomy_name hasn't been set
-		if ( !isset( $taxonomy_names ) )
+		// Bail if the taxonomy_name hasn't been set.
+		if ( ! isset( $taxonomy_names ) ) {
 			return;
+		}
 
 		$this->set_taxonomy_names( $taxonomy_names );
 		$this->post_type_name = $post_type_name;
@@ -103,14 +104,15 @@ class Arconix_Taxonomy_Register {
 	 * @since   1.0.0
 	 */
 	public function register() {
-		// Array of the labels and settings for the CPT
+		// Array of the labels and settings for the CPT.
 		$args = array_merge( $this->settings, $this->labels );
 
 		register_taxonomy( $this->taxonomy_name, $this->post_type_name, $args );
 
-		// Better to be safe than sorry according to WP wiki
-		if ( isset( $this->post_type_name ) )
+		// Better to be safe than sorry according to WP wiki.
+		if ( isset( $this->post_type_name ) ) {
 			register_taxonomy_for_object_type( $this->taxonomy_name, $this->post_type_name );
+		}
 	}
 
 	/**
@@ -119,16 +121,16 @@ class Arconix_Taxonomy_Register {
 	 * If no array is passed then the only setting will be to make the taxonomy show in the admin.
 	 *
 	 * @since   1.0.0
-	 * @param   array       $settings       Taxonomy settings
-	 * @return  array                       Array of taxonomy settings merged with defaults
+	 * @param   array $settings       Taxonomy settings.
+	 * @return  array                 Array of taxonomy settings merged with defaults
 	 */
 	protected function set_settings( $settings = array() ) {
-		// Set the tax to show in the post type admin column by default
+		// Set the tax to show in the post type admin column by default.
 		$defaults = array(
 			'show_admin_column' => true,
 		);
 
-		// Combine the default settings with the incoming settings and return
+		// Combine the default settings with the incoming settings and return.
 		return array_replace_recursive( $defaults, $settings );
 	}
 
@@ -143,7 +145,8 @@ class Arconix_Taxonomy_Register {
 		$singular = $this->singular;
 		$plural   = $this->plural;
 
-		$labels = array( 'labels' => array(
+		$labels = array(
+			'labels' => array(
 				'name'               => sprintf( __( '%s', 'textdomain' ), $plural ),
 				'singular_name'      => sprintf( __( '%s', 'textdomain' ), $singular ),
 				'menu_name'          => sprintf( __( '%s', 'textdomain' ), $plural ),
@@ -158,7 +161,8 @@ class Arconix_Taxonomy_Register {
 				'not_found_in_trash' => sprintf( __( 'No %s found in Trash', 'textdomain' ), $plural ),
 				'parent_item_colon'  => sprintf( __( 'Parent %s:', 'textdomain' ), $singular ),
 				'parent_item'        => sprintf( __( 'Parent %s', 'textdomain' ), $singular ),
-			) );
+			),
+		);
 
 		return $labels;
 	}
@@ -167,26 +171,26 @@ class Arconix_Taxonomy_Register {
 	 * Set the Taxonomy names
 	 *
 	 * @since   1.0.0
-	 * @param   string|array        $taxonomy_names     Name of the taxonomy or array of taxonomy conditional names.
+	 * @param   string|array $taxonomy_names     Name of the taxonomy or array of taxonomy conditional names.
 	 */
 	protected function set_taxonomy_names( $taxonomy_names ) {
-		// Check if all the post_type_names have been supplied
+		// Check if all the post_type_names have been supplied.
 		if ( is_array( $taxonomy_names ) ) {
 
-			// Set the taxonomy name
-			$this->taxonomy_name = $taxonomy_names[ 'taxonomy_name' ];
+			// Set the taxonomy name.
+			$this->taxonomy_name = $taxonomy_names['taxonomy_name'];
 
 			$name_types = array( 'singular', 'plural', 'slug' );
 
-			// Loop through types of names and assign the correct value
+			// Loop through types of names and assign the correct value.
 			foreach ( $name_types as $name ) {
 
-				// If the type has been set by the user
+				// If the type has been set by the user.
 				if ( isset( $taxonomy_names[ $name ] ) ) {
-					// Use that setting
+					// Use that setting.
 					$this->$name = $taxonomy_names[ $name ];
 				} else {
-					// Otherwise set the names ourselves
+					// Otherwise set the names ourselves.
 					switch ( $name ) {
 						case 'singular':
 							$this->singular = $this->get_singular();
@@ -202,7 +206,7 @@ class Arconix_Taxonomy_Register {
 				}
 			}
 		} else {
-			// $post_type_name is just a string so we must generate the other names
+			// $post_type_name is just a string so we must generate the other names.
 			$this->taxonomy_name = $taxonomy_names;
 			$this->singular      = $this->get_singular();
 			$this->plural        = $this->get_plural();
@@ -215,19 +219,19 @@ class Arconix_Taxonomy_Register {
 	 * Returns the human friendly singular name.
 	 *
 	 * @since   1.0.0
-	 * @param   string      $name       The slug name you want to unpluralize.
+	 * @param   string|null $name       The slug name you want to unpluralize.
 	 * @return  string                  The friendly singular name.
 	 */
 	protected function get_singular( $name = null ) {
 		// If no name is passed the post_type_name is used.
-		if ( !isset( $name ) ) {
+		if ( ! isset( $name ) ) {
 
 			$name = $this->taxonomy_name;
 
-			if ( substr( $name, -1 ) == "s" )
+			if ( 's' === substr( $name, -1 ) ) {
 				$name = substr( $name, 0, -1 );
-		}
-		else {
+			}
+		} else {
 			$name = $this->singular;
 		}
 
@@ -240,13 +244,14 @@ class Arconix_Taxonomy_Register {
 	 * Returns the human friendly plural name.
 	 *
 	 * @since   1.0.0
-	 * @param   string      $name       The slug name you want to pluralize.
+	 * @param   string|null $name       The slug name you want to pluralize.
 	 * @return  string                  The friendly pluralized name.
 	 */
 	protected function get_plural( $name = null ) {
 		// If no name is passed the taxonomy_names is used.
-		if ( !isset( $name ) )
+		if ( ! isset( $name ) ) {
 			$name = $this->get_singular( $this->taxonomy_name );
+		}
 
 		// Return the plural name. Add 's' to the end.
 		return $this->get_human_friendly( $name ) . 's';
@@ -262,16 +267,16 @@ class Arconix_Taxonomy_Register {
 	 *    str_replace  Replace all instances of hyphens and underscores to spaces
 	 *
 	 * @since   1.0.0
-	 * @param   string      $name       The name you want to make friendly.
+	 * @param   string|null $name       The name you want to make friendly.
 	 * @return  string                  The human friendly name.
 	 */
 	protected function get_human_friendly( $name = null ) {
 		// If no name is passed the taxonomy_name is used.
-		if ( !isset( $name ) )
+		if ( ! isset( $name ) ) {
 			$name = $this->taxonomy_name;
+		}
 
 		// Return human friendly name.
-		return ucwords( strtolower( str_replace( "-", " ", str_replace( "_", " ", $name ) ) ) );
+		return ucwords( strtolower( str_replace( array( '-', '_' ), ' ', $name ) ) );
 	}
-
 }

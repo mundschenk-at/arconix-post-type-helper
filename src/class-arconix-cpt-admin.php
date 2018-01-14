@@ -21,12 +21,14 @@ abstract class Arconix_CPT_Admin {
 	 * Constructor
 	 *
 	 * @since   1.0.0
-	 * @param   string      $post_type_name     Name of the Custom Post Type
-	 * @return  void                            Return if no post type name is passed
+	 *
+	 * @param   string $post_type_name     Name of the Custom Post Type.
+	 * @return  void                       Return if no post type name is passed.
 	 */
 	public function __construct( $post_type_name ) {
-		if ( !isset( $post_type_name ) )
+		if ( ! isset( $post_type_name ) ) {
 			return;
+		}
 
 		$this->post_type_name = $post_type_name;
 
@@ -70,10 +72,11 @@ abstract class Arconix_CPT_Admin {
 	 * Internal function that modifies the custom post type names in updated messages.
 	 *
 	 * @since   1.0.0
-	 * @param   array       $messages       An array of post updated messages
+	 *
+	 * @param   array $messages       An array of post updated messages.
 	 */
 	public function updated_messages( $messages ) {
-		// Get properties of the post type being configured
+		// Get properties of the post type being configured.
 		$obj = get_post_type_object( $this->post_type_name );
 
 		$singular = $obj->labels->singular_name;
@@ -101,10 +104,11 @@ abstract class Arconix_CPT_Admin {
 	 * Internal function that modifies the custom post type names in bulk updated messages
 	 *
 	 * @since   1.0.0
-	 * @param   array       $messages       An array of bulk updated messages
+	 *
+	 * @param   array $bulk_messages       An array of bulk updated messages.
 	 */
 	public function bulk_updated_messages( $bulk_messages, $bulk_counts ) {
-		// Get properties of the post type being configured
+		// Get properties of the post type being configured.
 		$obj = get_post_type_object( $this->post_type_name );
 
 		$singular = $obj->labels->singular_name;
@@ -125,12 +129,13 @@ abstract class Arconix_CPT_Admin {
 	 * Add the Post type to the "At a Glance" Dashboard Widget
 	 *
 	 * Requires the Gamajo Dashboard Glancer class.
+	 *
 	 * @see https://github.com/GaryJones/Gamajo-Dashboard-Glancer
 	 *
 	 * @since   1.0.0
 	 */
 	public function at_a_glance() {
-		// Get properties of the post type being configured
+		// Get properties of the post type being configured.
 		$obj = get_post_type_object( $this->post_type_name );
 
 		// Gamajo class must exist and post type must be public
