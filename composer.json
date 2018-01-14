@@ -1,0 +1,24 @@
+{
+    "name": "j-gardner/arconix-post-type-helper",
+    "description": "Helper classes to speed up creation/customization of custom post types and taxonomies.",
+    "type": "library",
+    "license": "GPL 2.0+",
+    "authors": [
+        {
+            "name": "John Gardner",
+            "homepage": "http://arconixpc.com",
+            "role": "Author"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.2.0"
+    },
+
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
