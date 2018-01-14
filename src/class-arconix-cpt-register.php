@@ -4,7 +4,7 @@
  * Class for Registering Custom Post Types
  *
  * New Post Types are added by instantiating the class and passing the necessary arguments
- * to the 'add' function. Users should search/replace 'textdomain' with their own plugin-specific domain
+ * to the 'add' function.
  *
  * @license GPL-2.0+
  * @version 1.0.0
@@ -59,8 +59,12 @@ class Arconix_CPT_Register {
 	 * Load Necessary WordPress hooks to register the custom post type.
 	 *
 	 * @since   1.0.0
+	 *
+	 * @param    string $textdomain        The textdomain for i18n.
 	 */
-	public function __construct() {
+	public function __construct( $textdomain ) {
+		$this->textdomain = $textdomain;
+
 		add_action( 'init', array( $this, 'register' ), 20 );
 	}
 
@@ -132,19 +136,19 @@ class Arconix_CPT_Register {
 
 		$labels = array(
 			'labels' => array(
-				'name'               => sprintf( __( '%s', 'textdomain' ), $plural ),
-				'singular_name'      => sprintf( __( '%s', 'textdomain' ), $singular ),
-				'menu_name'          => sprintf( __( '%s', 'textdomain' ), $plural ),
-				'all_items'          => sprintf( __( '%s', 'textdomain' ), $plural ),
-				'add_new'            => __( 'Add New', 'textdomain' ),
-				'add_new_item'       => sprintf( __( 'Add New %s', 'textdomain' ), $singular ),
-				'edit_item'          => sprintf( __( 'Edit %s', 'textdomain' ), $singular ),
-				'new_item'           => sprintf( __( 'New %s', 'textdomain' ), $singular ),
-				'view_item'          => sprintf( __( 'View %s', 'textdomain' ), $singular ),
-				'search_items'       => sprintf( __( 'Search %s', 'textdomain' ), $plural ),
-				'not_found'          => sprintf( __( 'No %s found', 'textdomain' ), $plural ),
-				'not_found_in_trash' => sprintf( __( 'No %s found in Trash', 'textdomain' ), $plural ),
-				'parent_item_colon'  => sprintf( __( 'Parent %s:', 'textdomain' ), $singular )
+				'name'               => sprintf( __( '%s', $this->textdomain ), $plural ),
+				'singular_name'      => sprintf( __( '%s', $this->textdomain ), $singular ),
+				'menu_name'          => sprintf( __( '%s', $this->textdomain ), $plural ),
+				'all_items'          => sprintf( __( '%s', $this->textdomain ), $plural ),
+				'add_new'            => __( 'Add New', $this->textdomain ),
+				'add_new_item'       => sprintf( __( 'Add New %s', $this->textdomain ), $singular ),
+				'edit_item'          => sprintf( __( 'Edit %s', $this->textdomain ), $singular ),
+				'new_item'           => sprintf( __( 'New %s', $this->textdomain ), $singular ),
+				'view_item'          => sprintf( __( 'View %s', $this->textdomain ), $singular ),
+				'search_items'       => sprintf( __( 'Search %s', $this->textdomain ), $plural ),
+				'not_found'          => sprintf( __( 'No %s found', $this->textdomain ), $plural ),
+				'not_found_in_trash' => sprintf( __( 'No %s found in Trash', $this->textdomain ), $plural ),
+				'parent_item_colon'  => sprintf( __( 'Parent %s:', $this->textdomain ), $singular )
 			),
 		);
 
